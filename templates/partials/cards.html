@@ -1,0 +1,13 @@
+<div class="cards">
+    {% for card in cards %}
+    <article class="card" draggable="true" data-card-id="{{ card.id }}" data-column-id="{{ card.column_id }}">
+        <h3>{{ card.title }}</h3>
+        <p>{{ card.details }}</p>
+        <form class="card-delete" hx-post="/cards/{{ card.id }}/delete" hx-include="this"
+            hx-target="#cards-column-{{ card.column_id }}" hx-swap="outerHTML">
+            <input type="hidden" name="card_id" value="{{ card.id }}" />
+            <button type="submit" aria-label="Delete card">Delete</button>
+        </form>
+    </article>
+    {% endfor %}
+</div>

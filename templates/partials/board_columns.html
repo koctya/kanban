@@ -1,0 +1,16 @@
+<div class="columns">
+    {% for column in board.columns.values() %}
+    <section class="column" id="column-{{ column.id }}">
+        <div class="column-header" hx-target="this" hx-swap="outerHTML" hx-post="/columns/{{ column.id }}/rename">
+            {% include 'partials/column_header.html' %}
+        </div>
+        <div class="card-list" hx-swap-oob="true" id="cards-column-{{ column.id }}">
+            {% set cards = column.cards %}
+            {% include 'partials/cards.html' %}
+        </div>
+        <div class="card-add-cta">
+            <button type="button" @click="openAddCardModal({{ column.id }})">Add card</button>
+        </div>
+    </section>
+    {% endfor %}
+</div>

@@ -1,0 +1,297 @@
+:root {
+    color-scheme: dark;
+    --bg: #081826;
+    --panel: #0f2c51;
+    --panel-strong: #143d76;
+    --text: #f5f7fb;
+    --muted: #bfcbd9;
+    --accent: #ecad0a;
+    --accent-soft: #3a4d71;
+    --border: rgba(255, 255, 255, 0.08);
+    --card: #122846;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top, rgba(52, 106, 188, 0.12), transparent 42%),
+        linear-gradient(180deg, #07121f 0%, #081826 100%);
+    color: var(--text);
+}
+
+.board-shell {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: rgba(8, 18, 38, 0.9);
+}
+
+.board-header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 2.5vw, 3rem);
+    letter-spacing: -0.03em;
+}
+
+.board-header .subtext {
+    color: var(--muted);
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 7, 20, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 1.5rem;
+}
+
+.modal-panel {
+    width: min(100%, 540px);
+    background: rgba(9, 26, 48, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 26px;
+    padding: 1.5rem;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.35rem;
+}
+
+.modal-close {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.modal-card-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.modal-card-form label {
+    display: grid;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.modal-card-form input,
+.modal-card-form textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    border-radius: 16px;
+    padding: 0.95rem 1rem;
+}
+
+.modal-card-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.button-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.card-add-cta {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: stretch;
+}
+
+.card-add-cta button {
+    width: 100%;
+    border: none;
+    border-radius: 16px;
+    padding: 0.95rem 1rem;
+    background: rgba(236, 173, 10, 0.15);
+    color: var(--accent);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.board-grid {
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
+.columns {
+    display: flex;
+    gap: 1.5rem;
+    min-width: max-content;
+    padding-bottom: 0.5rem;
+}
+
+.column {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.06));
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.column-header-title {
+    display: grid;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.column-header input[type="text"] {
+    width: 100%;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    padding: 0.35rem 0;
+}
+
+.column-count {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.card-list {
+    flex: 1;
+    margin-top: 1rem;
+    display: grid;
+    gap: 1rem;
+    min-height: 1px;
+    min-width: 260px;
+}
+
+.card-list.drag-over {
+    border: 2px dashed rgba(236, 173, 10, 0.7);
+    background: rgba(236, 173, 10, 0.08);
+    padding: 0.75rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.card.dragging {
+    opacity: 0.65;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.22);
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 1rem;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.11);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
+}
+
+.card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.card-delete {
+    margin-top: 1rem;
+}
+
+.card-delete button {
+    border: none;
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.card-add-form {
+    margin-top: 1.25rem;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.card-add-form input,
+.card-add-form textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+}
+
+.card-add-form textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.card-add-form button {
+    border: none;
+    padding: 0.95rem 1.1rem;
+    border-radius: 14px;
+    background: var(--accent);
+    color: #081826;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 760px) {
+    .board-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

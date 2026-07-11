@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanban Board</title>
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+    <script defer src="/static/js/dragdrop.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.12.0/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+
+<body>
+    <main class="board-shell">
+        <header class="board-header">
+            <div>
+                <h1>Kanban Board</h1>
+                <p class="subtext">One board, five columns, cards with title and details.</p>
+            </div>
+        </header>
+
+        <section class="board-grid" id="board-grid" x-data="window.dragDropBoard()" x-init="init()">
+            {% include 'partials/board_columns.html' %}
+
+            <div class="modal-backdrop" x-show="isAddCardModalOpen" x-cloak @click.outside="closeAddCardModal()"
+                x-transition>
+                <div class="modal-panel" @click.stop>
+                    <div class="modal-header">
+                        <h2>Add card</h2>
+                        <button type="button" class="modal-close" @click="closeAddCardModal()">✕</button>
+                    </div>
+                    <form class="modal-card-form" hx-post="/cards/add" :hx-target="`#cards-column-${activeColumnId}`"
+                        hx-swap="outerHTML" @submit="closeAddCardModal()">
+                        <input type="hidden" name="column_id" :value="activeColumnId" />
+                        <label>
+                            Title
+                            <input x-model="modalTitle" type="text" name="title" placeholder="Card title" required />
+                        </label>
+                        <label>
+                            Details
+                            <textarea x-model="modalDetails" name="details" placeholder="Card details"></textarea>
+                        </label>
+                        <div class="modal-actions">
+                            <button type="button" class="button-secondary" @click="closeAddCardModal()">Cancel</button>
+                            <button type="submit">Add card</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

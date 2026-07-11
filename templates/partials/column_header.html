@@ -1,0 +1,6 @@
+<div class="column-header-title">
+    <form hx-post="/columns/{{ column.id }}/rename" hx-trigger="submit" hx-swap="outerHTML">
+        <input type="text" name="title" value="{{ column.title }}" />
+    </form>
+    <span class="column-count">{{ column.cards|length }}</span>
+</div>
