@@ -1,5 +1,7 @@
 # Kanban Project
 
+[Initial hypermedia kanban implementation](https://github.com/koctya/kanban/tree/kanban-htmx)
+
 ## Business Requirements
 
 - An MVP of a Kanban style Project Management application as a web app  
@@ -14,8 +16,11 @@
 
 ## Technical Details
 
-- Implemented as a modern hypermedia app with fastapi with htmx + alpine.js frontend
-- use SQlite3 for persistence
+- Implemented as a modern hypermedia app with FastAPI, HTMX, and Alpine.js frontend
+- Use SQLite3 for persistence with default `kanban.db` and support `KANBAN_DB_PATH` for clean test isolation
+- Server-rendered Jinja2 templates are the source of truth for board state
+- Use HTMX to swap only affected page fragments for actions like rename, add, delete, and move
+- Alpine.js manages lightweight client state: add-card modal, drag-and-drop handler initialization, and UI behavior
 - No user management for the MVP
 - Use popular libraries
 - As simple as possible but with an elegant UI
@@ -29,6 +34,15 @@
 - Dark Navy: `#032147` - main headings
 - Gray Text: `#888888` - supporting text, labels
 - create both a light and dark theme with contrasting colors, with dark as default
+
+## Design
+
+- Use a hypermedia-first architecture: server-rendered templates plus HTMX for partial updates.
+- Avoid a full SPA framework; keep JavaScript minimal and focused on small interactions.
+- Alpine.js is used only for modal state and drag/drop handler lifecycle, not as the main UI framework.
+- Actions map directly to backend routes and HTML partials, keeping the server as the source of truth.
+- Horizontal columns stay in a single row with overflow scrolling rather than wrapping.
+- This design is preferred for the MVP because it reduces frontend complexity, improves robustness, and keeps the app easier to maintain.
 
 ## Strategy
 
